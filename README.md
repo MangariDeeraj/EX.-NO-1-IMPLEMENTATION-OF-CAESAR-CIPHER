@@ -20,28 +20,61 @@ STEP-5: Display the cipher text obtained above.
 ```
 #include <stdio.h>
 #include <string.h>
-void caesarCipher(char *text, int shift)
-{
-for (int i = 0; text[i]; i++)
-{
-if (text[i] >= 'A' && text[i] <= 'Z')
-text[i] = ((text[i]- 'A' + shift) % 26) + 'A';
+
+char* encrypt(char text[], int s) {
+    static char result[100];
+    int i;
+    
+    for (i = 0; i < strlen(text); i++) {
+        char char_ = text[i];
+        
+        if (char_ >= 'A' && char_ <= 'Z') {
+            result[i] = (char)(((int)char_ + s - 65) % 26 + 65);
+        } else if (char_ >= 'a' && char_ <= 'z') {
+            result[i] = (char)(((int)char_ + s - 97) % 26 + 97);
+        } else {
+            result[i] = char_;
+        }
+    }
+    result[i] = '\0';
+    return result;
 }
+
+char* decrypt(char text[], int s) {
+    static char result[100];
+    int i;
+    
+    for (i = 0; i < strlen(text); i++) {
+        char char_ = text[i];
+        
+        if (char_ >= 'A' && char_ <= 'Z') {
+            result[i] = (char)(((int)char_ - s - 65 + 26) % 26 + 65);
+        } else if (char_ >= 'a' && char_ <= 'z') {
+            result[i] = (char)(((int)char_ - s - 97 + 26) % 26 + 97);
+        } else {
+            result[i] = char_;
+        }
+    }
+    result[i] = '\0';
+    return result;
 }
-int main()
-{
-char text[] = "SAVEETHA ENGINEERING COLLAGE";
-printf("Plain Text: %s \n",text);
-caesarCipher(text, 3);
-printf("Encrypted Message: %s\n", text);
-caesarCipher(text,-3);
-printf("Decrypted Message: %s\n", text);
-return 0;
+
+int main() {
+    char text[100];
+    int s;
+    scanf("%s",text);
+    scanf("%d",&s);
+    printf("Text: %s\n", text);
+    printf("Shift: %d\n", s);
+    printf("Cipher: %s\n", encrypt(text, s));
+    printf("Decrypted: %s\n", decrypt(encrypt(text, s), s));
+    
+    return 0;
 }
 
 ```
 ## OUTPUT:
-<img width="1856" height="744" alt="image" src="https://github.com/user-attachments/assets/9cc5a364-ffe9-4dbd-bf9e-6a3b27385c2a" />
+<img width="923" height="692" alt="image" src="https://github.com/user-attachments/assets/37c32e3f-d4fb-43e7-b613-dabf7627628c" />
 
 
 ## RESULT :
